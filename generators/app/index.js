@@ -2,7 +2,7 @@
 const Generator = require('yeoman-generator');
 const pkg = require('../../package.json');
 const extend = require('deep-extend');
-const {getBanner} = require('../lib/text');
+const { getBanner } = require('../lib/text');
 
 module.exports = class extends Generator {
   initializing() {
@@ -46,11 +46,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const {
-      packageName,
-      widgetName,
-      friendlyWidgetName
-    } = this.props;
+    const { packageName, widgetName, friendlyWidgetName } = this.props;
 
     this._copySourceFile('.babelrc');
     this._copySourceFile('.editorconfig');
@@ -82,8 +78,7 @@ module.exports = class extends Generator {
       {
         process: file => {
           let fileText = file.toString();
-          fileText = fileText
-            .replace(/'Widget'/g, `'${widgetName}'`);
+          fileText = fileText.replace(/'Widget'/g, `'${widgetName}'`);
           return fileText;
         }
       }
@@ -96,7 +91,7 @@ module.exports = class extends Generator {
 
     this.fs.copy(
       this.templatePath(`widget-base/src/Widget/widget/Widget.template.html`),
-      this.destinationPath(`src/${packageName}/widget/${widgetName}.template.html`),
+      this.destinationPath(`src/${packageName}/widget/${widgetName}.template.html`)
     );
 
     this.fs.copy(
@@ -123,6 +118,6 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.installDependencies({bower: false});
+    this.installDependencies({ bower: false });
   }
 };

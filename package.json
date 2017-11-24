@@ -48,23 +48,6 @@
   "bugs": {
     "url": "https://github.com/JelteMX/generator-mendix-widget/issues"
   },
-  "eslintConfig": {
-    "extends": ["xo", "prettier"],
-    "env": {
-      "jest": true,
-      "node": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "printWidth": 90
-        }
-      ]
-    },
-    "plugins": ["prettier"]
-  },
   "repository": "JelteMX/generator-mendix-widget",
   "license": "MIT"
 }

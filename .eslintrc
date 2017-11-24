@@ -3,9 +3,22 @@
         "prettier",
         "xo"
     ],
+    "env": {
+        "jest": true,
+        "node": true
+    },
     "rules": {
         "comma-spacing": [1,{"after":true}],
+        "object-curly-spacing":"off",
         "indent": [1,2],
-        "capitalized-comments":"off"
-    }
+        "capitalized-comments":"off",
+        "prettier/prettier": [
+            "error",
+            {
+              "singleQuote": true,
+              "printWidth": 90
+            }
+        ]
+    },
+    "plugins": ["prettier"]
 }
