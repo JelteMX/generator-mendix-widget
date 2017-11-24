@@ -28,15 +28,16 @@ module.exports = class extends Generator {
       },
       {
         name: 'friendlyWidgetName',
-        message: 'Friendly widget name (in Modeler)',
-        default: 'Widget',
+        message: 'Friendly widget name in Modeler (leave blank to use name above)',
         when: !this.props.friendlyWidgetName
       }
     ];
 
     return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
       this.props = props;
+      if (!props.friendlyWidgetName) {
+        this.props.friendlyWidgetName = props.widgetName;
+      }
     });
   }
 
