@@ -1,0 +1,3 @@
+[submodule "generators/app/templates/widget-base"]
+	path = generators/app/templates/widget-base
+	url = https://github.com/JelteMX/widget-base
