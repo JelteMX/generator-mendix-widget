@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "prettier",
+        "xo"
+    ],
+    "rules": {
+        "comma-spacing": [1,{"after":true}],
+        "indent": [1,2],
+        "capitalized-comments":"off"
+    }
+}
