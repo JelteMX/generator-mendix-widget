@@ -29,7 +29,7 @@ module.exports = class extends Generator {
       {
         name: 'friendlyWidgetName',
         message: 'Friendly widget name (in Modeler)',
-        default: this.props.widgetName,
+        default: 'Widget',
         when: !this.props.friendlyWidgetName
       }
     ];
