@@ -5,12 +5,12 @@ const helpers = require('yeoman-test');
 
 const packageName = 'Package';
 const widgetName = 'TestWidget';
-const friendlyWidgetName = 'This is a widget';
+const friendlyWidgetName = 'TestWidget';
 
 const fileWidgetXML = `src/${packageName}/${widgetName}.xml`;
 const fileWidgetJS = `src/${packageName}/widget/${widgetName}.js`;
 
-describe('generator-mendix-widget', () => {
+describe('generator-mendix-widget (all prompts)', () => {
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
       packageName,
@@ -56,5 +56,18 @@ describe('generator-mendix-widget', () => {
         path: false
       }
     });
+  });
+});
+
+describe('generator-mendix-widget (no friendly name)', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+      packageName,
+      widgetName
+    });
+  });
+
+  it('contains the right ids', () => {
+    assert.fileContent(fileWidgetXML, `<name>${widgetName}</name>`);
   });
 });
