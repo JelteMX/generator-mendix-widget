@@ -4,6 +4,8 @@ const pkg = require('../../package.json');
 const extend = require('deep-extend');
 const { getBanner } = require('../lib/text');
 
+const widgetSrcFolder = 'src/Widget/widget';
+
 module.exports = class extends Generator {
   initializing() {
     this.props = {};
@@ -39,8 +41,11 @@ module.exports = class extends Generator {
     });
   }
 
-  _copySourceFile(path) {
-    this.fs.copy(this.templatePath(`widget-base/${path}`), this.destinationPath(path));
+  _copySourceFile(path, dest) {
+    this.fs.copy(
+      this.templatePath(`widget-base/${path}`),
+      this.destinationPath(dest || path)
+    );
   }
 
   _copySourceFiles() {
@@ -72,23 +77,28 @@ module.exports = class extends Generator {
   _copyByNames() {
     const { packageName, widgetName } = this.props;
 
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/widget/Widget.scss`),
-      this.destinationPath(`src/${packageName}/widget/${widgetName}.scss`)
+    this._copySourceFile(
+      `${widgetSrcFolder}/Widget.scss`,
+      `src/${packageName}/widget/${widgetName}.scss`
     );
 
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/widget/Widget.template.html`),
-      this.destinationPath(`src/${packageName}/widget/${widgetName}.template.html`)
+    this._copySourceFile(
+      `${widgetSrcFolder}/Widget.scss`,
+      `src/${packageName}/widget/${widgetName}.scss`
     );
 
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/widget/Core.js`),
-      this.destinationPath(`src/${packageName}/widget/Core.js`)
+    this._copySourceFile(
+      `${widgetSrcFolder}/Widget.template.html`,
+      `src/${packageName}/widget/${widgetName}.template.html`
     );
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/widget/Libraries.js`),
-      this.destinationPath(`src/${packageName}/widget/Libraries.js`)
+
+    this._copySourceFile(
+      `${widgetSrcFolder}/Core.js`,
+      `src/${packageName}/widget/Core.js`
+    );
+    this._copySourceFile(
+      `${widgetSrcFolder}/Libraries.js`,
+      `src/${packageName}/widget/Libraries.js`
     );
   }
 
