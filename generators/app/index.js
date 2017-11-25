@@ -10,9 +10,7 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    // Have Yeoman greet the user.
     this.log(getBanner(pkg));
-
     const prompts = [
       {
         name: 'packageName',
@@ -45,9 +43,7 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath(`widget-base/${path}`), this.destinationPath(path));
   }
 
-  writing() {
-    const { packageName, widgetName, friendlyWidgetName } = this.props;
-
+  _copySourceFiles() {
     this._copySourceFile('.babelrc');
     this._copySourceFile('.editorconfig');
     this._copySourceFile('.eslintignore');
@@ -57,32 +53,24 @@ module.exports = class extends Generator {
     this._copySourceFile('postcss.config.js');
     this._copySourceFile('webpack.config.js');
     this._copySourceFile('widgetpackage.template.xml.ejs');
+  }
 
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/Widget.xml`),
-      this.destinationPath(`src/${packageName}/${widgetName}.xml`),
-      {
-        process: file => {
-          let fileText = file.toString();
-          fileText = fileText
-            .replace(/Widget\.widget\.Widget/g, `${packageName}.widget.${widgetName}`)
-            .replace(/<name>Widget<\/name>/g, `<name>${friendlyWidgetName}</name>`);
-          return fileText;
-        }
+  _writePackage() {
+    const { packageName } = this.props;
+    const source = this.fs.readJSON(this.templatePath(`widget-base/package.json`));
+    extend(source, {
+      widget: {
+        package: packageName,
+        libraries: false,
+        core: false,
+        path: false
       }
-    );
+    });
+    this.fs.writeJSON(this.destinationPath('package.json'), source);
+  }
 
-    this.fs.copy(
-      this.templatePath(`widget-base/src/Widget/widget/Widget.js`),
-      this.destinationPath(`src/${packageName}/widget/${widgetName}.js`),
-      {
-        process: file => {
-          let fileText = file.toString();
-          fileText = fileText.replace(/'Widget'/g, `'${widgetName}'`);
-          return fileText;
-        }
-      }
-    );
+  _copyByNames() {
+    const { packageName, widgetName } = this.props;
 
     this.fs.copy(
       this.templatePath(`widget-base/src/Widget/widget/Widget.scss`),
@@ -102,19 +90,48 @@ module.exports = class extends Generator {
       this.templatePath(`widget-base/src/Widget/widget/Libraries.js`),
       this.destinationPath(`src/${packageName}/widget/Libraries.js`)
     );
+  }
 
-    const source = this.fs.readJSON(this.templatePath(`widget-base/package.json`));
+  _writeWidgetXML() {
+    const { packageName, widgetName, friendlyWidgetName } = this.props;
 
-    extend(source, {
-      widget: {
-        package: packageName,
-        libraries: false,
-        core: false,
-        path: false
+    this.fs.copy(
+      this.templatePath(`widget-base/src/Widget/Widget.xml`),
+      this.destinationPath(`src/${packageName}/${widgetName}.xml`),
+      {
+        process: file => {
+          let fileText = file.toString();
+          fileText = fileText
+            .replace(/Widget\.widget\.Widget/g, `${packageName}.widget.${widgetName}`)
+            .replace(/<name>Widget<\/name>/g, `<name>${friendlyWidgetName}</name>`);
+          return fileText;
+        }
       }
-    });
+    );
+  }
 
-    this.fs.writeJSON(this.destinationPath('package.json'), source);
+  _writeWidgetJS() {
+    const { packageName, widgetName } = this.props;
+
+    this.fs.copy(
+      this.templatePath(`widget-base/src/Widget/widget/Widget.js`),
+      this.destinationPath(`src/${packageName}/widget/${widgetName}.js`),
+      {
+        process: file => {
+          let fileText = file.toString();
+          fileText = fileText.replace(/'Widget'/g, `'${widgetName}'`);
+          return fileText;
+        }
+      }
+    );
+  }
+
+  writing() {
+    this._copySourceFiles();
+    this._writeWidgetXML();
+    this._writeWidgetJS();
+    this._copyByNames();
+    this._writePackage();
   }
 
   install() {
