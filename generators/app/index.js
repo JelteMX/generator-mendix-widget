@@ -11,9 +11,8 @@ module.exports = class extends Generator {
     this.props = {};
   }
 
-  prompting() {
-    this.log(getBanner(pkg));
-    const prompts = [
+  _getPrompts() {
+    return [
       {
         name: 'packageName',
         message: 'Package name (part of Package.widget.WidgetName)',
@@ -32,6 +31,12 @@ module.exports = class extends Generator {
         when: !this.props.friendlyWidgetName
       }
     ];
+  }
+
+  prompting() {
+    this.log(getBanner(pkg));
+
+    const prompts = this._getPrompts();
 
     return this.prompt(prompts).then(props => {
       this.props = props;
