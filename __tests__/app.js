@@ -3,14 +3,58 @@ const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
-describe('generator-mendix-widget-es-6:app', () => {
+const packageName = 'Package';
+const widgetName = 'TestWidget';
+const friendlyWidgetName = 'This is a widget';
+
+const fileWidgetXML = `src/${packageName}/${widgetName}.xml`;
+const fileWidgetJS = `src/${packageName}/widget/${widgetName}.js`;
+
+describe('generator-mendix-widget', () => {
   beforeAll(() => {
-    return helpers
-      .run(path.join(__dirname, '../generators/app'))
-      .withPrompts({ someAnswer: true });
+    return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+      packageName,
+      widgetName,
+      friendlyWidgetName
+    });
   });
 
   it('creates files', () => {
-    assert.file(['dummyfile.txt']);
+    assert.file([
+      'package.json',
+      '.babelrc',
+      '.editorconfig',
+      '.eslintignore',
+      '.eslintrc',
+      '.gitignore',
+      'Gulpfile.js',
+      'postcss.config.js',
+      'webpack.config.js',
+      'widgetpackage.template.xml.ejs',
+      fileWidgetXML,
+      fileWidgetJS,
+      `src/${packageName}/widget/${widgetName}.scss`,
+      `src/${packageName}/widget/${widgetName}.template.html`,
+      `src/${packageName}/widget/Core.js`,
+      `src/${packageName}/widget/Libraries.js`
+    ]);
+  });
+
+  it('contains the right ids', () => {
+    assert.fileContent(fileWidgetXML, `${packageName}.widget.${widgetName}`);
+    assert.fileContent(fileWidgetXML, `<name>${friendlyWidgetName}</name>`);
+    assert.fileContent(fileWidgetJS, `'${widgetName}'`);
+  });
+
+  it('has the right values in package.json', () => {
+    assert.jsonFileContent('package.json', {
+      widget: {
+        package: packageName,
+        filesFolder: 'widget',
+        libraries: false,
+        core: false,
+        path: false
+      }
+    });
   });
 });
