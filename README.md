@@ -1,4 +1,4 @@
-# generator-mendix-widget [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# generator-mendix-widget [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Maintainability](https://api.codeclimate.com/v1/badges/f5f769bee2e5d848109b/maintainability)](https://codeclimate.com/github/JelteMX/generator-mendix-widget/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/f5f769bee2e5d848109b/test_coverage)](https://codeclimate.com/github/JelteMX/generator-mendix-widget/test_coverage)
 > Generate Mendix Widgets in ES6 style
 
 ## Installation
