@@ -33,7 +33,9 @@
     "yosay": "^2.0.1"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverage": true
   },
   "scripts": {
     "prepublish": "nsp check",
