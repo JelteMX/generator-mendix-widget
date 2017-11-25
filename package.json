@@ -8,9 +8,17 @@
     "email": "jelte.lagendijk@mendix.com",
     "url": "https://github.com/JelteMX/"
   },
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "main": "generators/index.js",
-  "keywords": ["generator", "mendix", "widget", "es6", "yeoman-generator"],
+  "keywords": [
+    "generator",
+    "mendix",
+    "widget",
+    "es6",
+    "yeoman-generator"
+  ],
   "devDependencies": {
     "coveralls": "^2.13.1",
     "deep-extend": "^0.5.0",
@@ -29,6 +37,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "generator-license": "^5.2.0",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
   },
@@ -44,8 +53,14 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "bugs": {
     "url": "https://github.com/JelteMX/generator-mendix-widget/issues"

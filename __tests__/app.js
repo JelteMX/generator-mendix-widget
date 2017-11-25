@@ -5,7 +5,8 @@ const helpers = require('yeoman-test');
 
 const packageName = 'Package';
 const widgetName = 'TestWidget';
-const friendlyWidgetName = 'TestWidget';
+const friendlyWidgetName = 'FriendlyWidget';
+const license = 'MIT';
 
 const fileWidgetXML = `src/${packageName}/${widgetName}.xml`;
 const fileWidgetJS = `src/${packageName}/widget/${widgetName}.js`;
@@ -15,7 +16,8 @@ describe('generator-mendix-widget (all prompts)', () => {
     return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
       packageName,
       widgetName,
-      friendlyWidgetName
+      friendlyWidgetName,
+      license
     });
   });
 
@@ -36,7 +38,8 @@ describe('generator-mendix-widget (all prompts)', () => {
       `src/${packageName}/widget/${widgetName}.scss`,
       `src/${packageName}/widget/${widgetName}.template.html`,
       `src/${packageName}/widget/Core.js`,
-      `src/${packageName}/widget/Libraries.js`
+      `src/${packageName}/widget/Libraries.js`,
+      'LICENSE'
     ]);
   });
 
@@ -63,11 +66,31 @@ describe('generator-mendix-widget (no friendly name)', () => {
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
       packageName,
-      widgetName
+      widgetName,
+      license
     });
   });
 
   it('contains the right ids', () => {
     assert.fileContent(fileWidgetXML, `<name>${widgetName}</name>`);
+  });
+});
+
+describe('generator-mendix-widget (no license)', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+      packageName,
+      widgetName,
+      license: 'nolicense'
+    });
+  });
+
+  it('has no license', () => {
+    assert.noJsonFileContent('package.json', {
+      license: 'MIT'
+    });
+    assert.jsonFileContent('package.json', {
+      private: true
+    });
   });
 });
