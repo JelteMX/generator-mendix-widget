@@ -58,7 +58,7 @@ module.exports = class extends Generator {
     this._copySourceFile('.editorconfig');
     this._copySourceFile('.eslintignore');
     this._copySourceFile('.eslintrc');
-    this._copySourceFile('.gitignore');
+    this.fs.copy(this.templatePath(`_gitignore`), this.destinationPath('.gitignore'));
     this._copySourceFile('Gulpfile.js');
     this._copySourceFile('postcss.config.js');
     this._copySourceFile('webpack.config.js');
