@@ -1,6 +1,6 @@
 {
   "name": "generator-mendix-widget",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Generate Mendix Widgets in ES6 style",
   "homepage": "https://github.com/JelteMX/generator-mendix-widget/",
   "author": {
